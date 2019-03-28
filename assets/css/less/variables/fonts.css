@@ -1,0 +1,10 @@
+/* MIXIN TO CREATE FINT-FACES */
+/* FONT FACES */
+@font-face {
+  font-family: 'philosopher-regular';
+  src: url('../fonts/Philosopher/Philosopher-Regular.eot');
+  /* IE9 Compat Modes */
+  src: url('../fonts/Philosopher/Philosopher-Regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */ url('../fonts/Philosopher/Philosopher-Regular.woff2') format('woff2'), /* Super Modern Browsers */ url('../fonts/Philosopher/Philosopher-Regular.woff') format('woff'), /* Pretty Modern Browsers */ url('../fonts/Philosopher/Philosopher-Regular.ttf') format('truetype');
+  /* Safari, Android, iOS */
+}
+/* FONT VARIABLES */

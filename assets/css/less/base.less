@@ -1,0 +1,51 @@
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  // TODO set class with Javacript
+  background-color: @color-shade-white;
+  background: linear-gradient(
+          rgba(0, 0, 0, 0.1),
+          rgba(0, 0, 0, 0.9)),
+  url('../images/backgrounds/bg_the_seker_family.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
+}
+
+.main {
+  font-family: @font-family-philosopher-regular, sans-serif;
+
+  .gift-list-link,
+  .home-link {
+    position: absolute;
+    top: -5px;
+    padding: 15px 15px 5px 10px;
+    background-color: rgba(0, 0, 0, 0.45);
+    border-radius: 5px;
+    color: darkgoldenrod;
+    a {
+      > i{
+        font-size: (@font-size-md + 0.6);
+      }
+      font-size: @font-size-md;
+      color: darkgoldenrod;
+      text-shadow: @text-shadow;
+
+      &:hover {
+        text-decoration: none;
+        color: goldenrod;
+      }
+    }
+  }
+  .gift-list-link{
+    right: 0;
+  }
+  .home-link {
+    left: 0;
+
+  }
+}

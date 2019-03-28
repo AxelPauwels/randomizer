@@ -1,0 +1,145 @@
+@import "mixins/triangle";
+
+// Mobile first
+.main-game {
+  padding-top: 25vh;
+
+  .image-wrapper {
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+
+    > div {
+      padding: 0;
+
+      &.img-left {
+        text-align: right;
+      }
+
+      &.img-right {
+        text-align: left;
+      }
+    }
+
+    img {
+      width: 100%;
+      max-width: 300px;
+      height: auto;
+      border: 1px solid darkgoldenrod;
+      border-radius: 5px;
+    }
+
+    .arrow-middle {
+      position: relative;
+
+      .arrow-to-right {
+        position: absolute;
+        top: ~"calc(50% - @{triangle-size})"; // 30px is the height of the triangle
+        left: ~"calc(50% - (@{triangle-size}/2))"; // 15px is the height of the triangle
+        .triangle('right', @triangle-size, @triangle-color);
+      }
+    }
+  }
+
+  .controls-wrapper {
+    margin: 0;
+    margin-top: 50px;
+
+    > div {
+      padding: 5px;
+
+      &:first-of-type {
+        padding-left: 0;
+      }
+
+      &:last-of-type {
+        padding-right: 0;
+
+        > button {
+          width: 100%;
+
+          text-shadow: @text-shadow;
+          &:hover {
+            text-shadow: none;
+          }
+        }
+      }
+
+      > select,
+      > input,
+      > button {
+        font-size: @font-size-md;
+        height: @form-control-height-md !important; // force for the select height
+      }
+    }
+  }
+  .message-wrapper,
+  .error-wrapper {
+    display: none;
+    padding-top: 15vh;
+
+    .message {
+      color: goldenrod;
+      font-size: @font-size-lg;
+      text-align: center;
+      text-shadow: @text-shadow;
+    }
+  }
+
+  .result-wrapper {
+    display: none;
+    margin-top: 30px;
+
+    .result,
+    .result-ps {
+      margin: 0 auto;
+      color: goldenrod;
+      font-size: @font-size-lg;
+      text-align: center;
+      text-shadow: @text-shadow;
+    }
+
+    .result-ps {
+      margin-top: 0;
+      font-size: @font-size-md;
+      text-align: center;
+    }
+  }
+
+}
+
+// Tablet
+@media screen and (min-width: @screen-md-minwidth) {
+  .main-game {
+    padding-top: 18vh;
+
+    .controls-wrapper {
+      margin: 30px;
+
+      > div {
+        padding: 20px;
+      }
+    }
+    .error-wrapper {
+      padding-top: 25vh;
+    }
+  }
+}
+
+// Desktop
+@media screen and (min-width: @screen-lg-minwidth) {
+  .main-game {
+    padding-top: 15vh;
+
+    .controls-wrapper {
+      margin: 30px;
+
+      > div {
+        padding: 15px;
+      }
+    }
+    .error-wrapper {
+      padding-top: 30vh;
+    }
+  }
+}

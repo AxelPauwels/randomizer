@@ -1,0 +1,29 @@
+.main-home {
+  padding-top: ~"calc(50vh - (@{form-control-height-md} / 2))"; // 50% minus (the height of form controls divided by 2)
+
+  form#gameform {
+    width: 100%;
+
+    select,
+    input {
+      font-size: @font-size-md;
+      height: @form-control-height-md !important; // force for the select height
+    }
+
+    select {
+      margin-right: 15px;
+      margin-left: auto;
+      width: 70%;
+    }
+
+    input {
+      margin: auto;
+      margin-left: 0;
+
+      text-shadow: @text-shadow;
+      &:hover{
+        text-shadow: none;
+      }
+    }
+  }
+}

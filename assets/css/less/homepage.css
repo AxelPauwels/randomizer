@@ -1,0 +1,15 @@
+.main-home {
+  padding-top: calc(50vh - (38px / 2));
+}
+.main-home form#gameform {
+  width: 100%;
+}
+.main-home form#gameform select {
+  margin-right: 15px;
+  margin-left: auto;
+  width: 70%;
+}
+.main-home form#gameform input {
+  margin: auto;
+  margin-left: 0;
+}

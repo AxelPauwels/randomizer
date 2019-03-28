@@ -1,0 +1,87 @@
+.main-game {
+  padding-top: 25vh;
+}
+.main-game .image-wrapper {
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+}
+.main-game .image-wrapper > div {
+  padding: 0;
+}
+.main-game .image-wrapper > div.img-left {
+  text-align: right;
+}
+.main-game .image-wrapper > div.img-right {
+  text-align: left;
+}
+.main-game .image-wrapper img {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  border: 1px solid darkgoldenrod;
+  border-radius: 8px;
+}
+.main-game .image-wrapper .arrow-middle {
+  position: relative;
+}
+.main-game .image-wrapper .arrow-middle .arrow-to-right {
+  position: absolute;
+  top: calc(50% - 30px);
+  left: calc(50% - (30px/2));
+  width: 0;
+  height: 0;
+  border-top: 30px solid transparent;
+  border-bottom: 30px solid transparent;
+  border-left: 30px solid goldenrod;
+}
+.main-game .controls-wrapper {
+  margin: 0;
+  margin-top: 50px;
+}
+.main-game .controls-wrapper > div {
+  padding: 5px;
+}
+.main-game .controls-wrapper > div:first-of-type {
+  padding-left: 0;
+}
+.main-game .controls-wrapper > div:last-of-type {
+  padding-right: 0;
+}
+.main-game .controls-wrapper > div:last-of-type > button {
+  width: 100%;
+}
+.main-game .controls-wrapper > div > select,
+.main-game .controls-wrapper > div > input,
+.main-game .controls-wrapper > div > button {
+  font-size: 1.2rem;
+  height: 40px !important;
+}
+.main-game .message {
+  display: block;
+  color: darkgoldenrod;
+  font-size: 1.4rem;
+  text-align: center;
+}
+@media screen and (min-width: 768px) {
+  .main-game {
+    padding-top: 18vh;
+  }
+  .main-game .controls-wrapper {
+    margin: 30px;
+  }
+  .main-game .controls-wrapper > div {
+    padding: 15px;
+  }
+}
+@media screen and (min-width: 992px) {
+  .main-game {
+    padding-top: 15vh;
+  }
+  .main-game .controls-wrapper {
+    margin: 30px;
+  }
+  .main-game .controls-wrapper > div {
+    padding: 15px;
+  }
+}

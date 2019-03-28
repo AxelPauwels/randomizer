@@ -1,0 +1,10 @@
+.main-gift-lists {
+  padding-top: 25vh;
+}
+.main-gift-lists > div p {
+  display: block;
+  margin: 0;
+}
+.main-gift-lists > div p a {
+  color: darkgoldenrod;
+}

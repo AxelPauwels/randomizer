@@ -1,0 +1,23 @@
+@font-path: '../fonts/'; //path started from compiles css file (here ccs/custom.css)
+
+/* MIXIN TO CREATE FINT-FACES */
+.myFontFace (@font-dir, @fontFileName , @customFontFamilyName,@svgFontName:'') {
+  font-family: '@{customFontFamilyName}';
+  src: url('@{font-path}@{font-dir}/@{fontFileName}.eot'); /* IE9 Compat Modes */
+  src: url('@{font-path}@{font-dir}/@{fontFileName}.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */ url('@{font-path}@{font-dir}/@{fontFileName}.woff2') format('woff2'), /* Super Modern Browsers */ url('@{font-path}@{font-dir}/@{fontFileName}.woff') format('woff'), /* Pretty Modern Browsers */ url('@{font-path}@{font-dir}/@{fontFileName}.ttf') format('truetype'); /* Safari, Android, iOS */
+
+  & when not(@svgFontName='') {
+    src: url('@{font-path}@{font-dir}/@{fontFileName}.svg#@{svgFontName}') format('svg'); /* Legacy iOS */
+  }
+}
+
+/* FONT FACES */
+@font-face {
+  .myFontFace("Philosopher", "Philosopher-Regular", "philosopher-regular");
+}
+
+/* FONT VARIABLES */
+@font-family-philosopher-regular: philosopher-regular;
+@font-size-md:1.2rem;
+@font-size-lg:2.4rem;
+@text-shadow: 1px 1px black;
