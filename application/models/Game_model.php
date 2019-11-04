@@ -17,6 +17,8 @@ class Game_model extends CI_Model
     public function getAll()
     {
         $this->db->where('id >', 0);
+        $this->db->where('year', date('Y'));
+
         $this->db->order_by('name');
         $query = $this->db->get('game');
         $result = $query->result();
