@@ -32,7 +32,7 @@
          * @var array $games
          * @var Game_entity $game
          */
-        $gameDropdownOptions = array('' => '--- Select your game ---');
+        $gameDropdownOptions = array('' => '--- Select a randomizer ---');
 
         foreach ($games as $game) {
             $gameDropdownOptions[$game->getId()] = $game->getName() . ' ' . $game->getYear();
