@@ -117,10 +117,10 @@ function showPossiblePersons(currentPersonId, gameId, image_right, messageWrappe
                 }
 
                 var resultPs = "";
-                if (chosenPerson.isMale === "1") {
-                    resultPs = "You can suprise him with a gift of € 20.";
+                if (chosenPerson.isMale) {
+                    resultPs = "You can surprise him with a gift of € 20.";
                 } else {
-                    resultPs = "You can suprise her with a gift of € 20.";
+                    resultPs = "You can surprise her with a gift of € 20.";
                 }
                 resultWrapper.find('p.result').html(resultMessage);
                 resultWrapper.find('p.result-ps').html(resultPs);

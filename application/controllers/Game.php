@@ -80,7 +80,6 @@ class Game extends CI_Controller
         $currentPersonId = $this->input->post('currentPersonId');
         $gameId = (int)$this->input->post('gameId');
 
-
         // get all game persons by gameId
         $gamePersons = $this->game_person_model->getGamePersonsByGameId($gameId);
 
@@ -108,9 +107,40 @@ class Game extends CI_Controller
             }
         }
 
-        // get random person
+        //randomize
         $randomIndex = rand(0, count($unchosenPersons) - 1);
         $randomPerson = $unchosenPersons[$randomIndex];
+
+        // if this is the 2nd last person, check if te last person will be himself
+        $currentPersonIsSecondLast = $this->game_person_model->checkIfPersonIsSecondLast($gameId);
+        if ($currentPersonIsSecondLast) {
+            // check if remaining person will be himself, if this is the case, get his id for this current (2nd last) person
+            $lastPersonId = $this->game_person_model->getLastPersonIdIfHeWillBeHimself(
+                $gameId,
+                $currentPersonId,
+                $randomPerson->id
+            );
+
+            // update $randomPerson with the last person, so the last person will be himself
+            if ($lastPersonId !== -1) {
+                /** @var $lastPerson Person_entity */
+                $lastPerson = $this->person_model->getPersonById($lastPersonId);
+
+                // dirty fix (make a normal object from the PersonObject)
+                $convertedPerson = new stdClass();
+                $convertedPerson->id = $lastPerson->getId();
+                $convertedPerson->name = $lastPerson->getName();
+                $convertedPerson->lastname = $lastPerson->getLastName();
+                $convertedPerson->nickname = $lastPerson->getNickname();
+                $convertedPerson->isMale = $lastPerson->getIsMale();
+                $convertedPerson->accessCode = $lastPerson->getAccessCode();
+                $convertedPerson->wishlist = $lastPerson->getWishlist();
+                $convertedPerson->isChosen = $lastPerson->getIsChosen();
+                $convertedPerson->hasChosenPersonId = $lastPerson->getHasChosenPersonId();
+                $convertedPerson->image = $lastPerson->getImage();
+                $randomPerson = $convertedPerson;
+            }
+        }
 
         // save result
         $this->game_person_model->updatePerson($gameId, $currentPersonId, $randomPerson->id);
