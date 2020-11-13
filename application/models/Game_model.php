@@ -9,6 +9,22 @@ class Game_model extends CI_Model
         parent::__construct();
     }
 
+	/**
+	 * Returns a 'Game' object
+	 *
+	 * @param int $gameId
+	 * @return Game_entity $game
+	 */
+	public function get(int $gameId)
+	{
+		$this->db->where('id', $gameId);
+		$query = $this->db->get('game');
+		$result = $query->row();
+		$game = $this->getGameObject($result);
+
+		return $game;
+	}
+
     /**
      * Returns an array with 'Game' objects
      *
@@ -27,6 +43,7 @@ class Game_model extends CI_Model
         foreach ($result as $item) {
             $games[] = $this->getGameObject($item);
         }
+
         return $games;
     }
 
@@ -43,6 +60,7 @@ class Game_model extends CI_Model
             $item->name,
             $item->year
         );
+
         return $game;
     }
 }

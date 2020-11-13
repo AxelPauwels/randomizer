@@ -1,0 +1,100 @@
+// base (not used in css files)
+//*****************************
+
+//default
+.mixin-c-margin() {
+  margin: 0 auto;
+}
+
+//sizes
+.mixin-c-btn-size(@width:auto, @height:auto) {
+  width: @width;
+  height: @height;
+}
+
+//color
+.mixin-c-btn-color(@color:inherit, @bg-color:inherit, @border-color:inherit) {
+  color: @color;
+  background: @bg-color;
+  border-color: @border-color;
+}
+
+//radius
+.mixin-c-btn-border-radius(@border-radius) {
+  border-radius: @border-radius;
+}
+
+//hover
+.mixin-c-btn-hover() {
+  &:hover,
+  &:active,
+  &:focus {
+	box-shadow: none !important;
+  }
+}
+
+.mixin-c-btn-hover-color(@color,@bg-color,@border-color) {
+  &:hover,
+  &:active,
+  &:focus {
+	color: @color;
+	background: @bg-color !important;
+	border-color: @border-color !important;
+  }
+}
+
+
+// css mixins (place inside css files inside button selector)
+//***********************************************************
+.c-btn() {
+  .mixin-c-margin();
+  .mixin-c-btn-hover();
+}
+
+.c-btn--xs() {
+  .mixin-c-btn-size(50px);
+}
+
+.c-btn--sm() {
+  .mixin-c-btn-size(100px);
+}
+
+.c-btn--size-auto() {
+  .mixin-c-btn-size(auto);
+}
+
+.c-btn--red() {
+  .mixin-c-btn-color(lighten(@color-primary-light, 20%), @color-secondary-normal, @color-secondary-normal);
+  .mixin-c-btn-hover-color(lighten(@color-primary-light, 20%), lighten(@color-secondary-normal, 10%), @color-secondary-normal);
+}
+
+.c-btn--pill() {
+  .mixin-c-btn-border-radius(50px);
+}
+
+// css class (place inside html as css class) (should be moved to dir 'components')
+//*******************************************
+.c-btn {
+  .c-btn();
+
+  &--xs {
+	.c-btn--xs();
+  }
+
+  &--sm {
+	.c-btn--sm();
+  }
+
+  &--size-auto {
+	.c-btn--size-auto();
+  }
+
+  &--red {
+	.c-btn--red()
+  }
+
+  &--pill {
+	.c-btn--pill()
+  }
+
+}

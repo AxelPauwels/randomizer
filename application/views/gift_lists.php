@@ -1,11 +1,5 @@
-<main role="main" class="container main main-gift-lists">
-    <div class="home-link">
-        <a href="<?php echo site_url('/game/index') ?>"><i class="fas fa-home"></i> Home</a>
-    </div>
-    <div class="gift-list-link">
-        <a href="<?php echo site_url('/game/giftLists') ?>"><i class="fas fa-gift"></i> Gift lists</a>
-    </div>
-    <div class="row">
+<main role="main" class="container main main--giftlists d-flex justify-content-center">
+	<div class="row flex-column justify-content-center align-items-center text-center w-100 main--giftlists__item">
         <?php
         /**
          * Data for dropdown

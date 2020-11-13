@@ -1,0 +1,25 @@
+.main--select-game {
+  &__form {
+	max-width: 300px !important;
+  }
+
+  &__dropdown {
+	width: 100% !important; // override bootstrap mediaQuery
+	margin-right: 10px;
+	color: black;
+	background-color: lighten(@color-primary-light, 20%);
+	border-color: @color-primary-normal;
+
+	&:focus,
+	&:active {
+	  outline: none !important;
+	  box-shadow: none !important;
+	  background-color: lighten(@color-primary-light, 20%) !important;
+	  border-color: @color-primary-normal;
+	}
+  }
+
+  &__submit {
+
+  }
+}

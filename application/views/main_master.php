@@ -34,9 +34,17 @@
 </head>
 
 <body>
-<?php
-echo $myContent;
-?>
+
+<div class="nav d-flex flex-row justify-content-between">
+	<div class="nav__item text-left p-2">
+		<a href="<?php echo site_url('/game/verify') ?>"><i class="fas fa-2x fa-home"></i></a>
+	</div>
+	<div class="nav__item text-right p-2">
+		<a href="<?php echo site_url('/game/giftLists') ?>"><i class="fas fa-2x fa-gift"></i></a>
+	</div>
+</div>
+
+<?php echo $myContent; ?>
 </body>
 
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->

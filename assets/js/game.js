@@ -11,71 +11,37 @@ function ucFirst(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-function chooseYourselfDropdownListener(chooseYourSelf_dropdown_control, accessCode_input_control, image_left) {
-    chooseYourSelf_dropdown_control.change(function () {
-        personId = chooseYourSelf_dropdown_control.find('option:selected').val();
-        gameId = chooseYourSelf_dropdown_control.find('option:selected').data('game-id');
-
-        var chosenPersonId = chooseYourSelf_dropdown_control.find('option:selected').data('token');
-        if (chosenPersonId !== -1) {
-            personHasAlreadyChosen = true;
-        }
-        var personImageName = chooseYourSelf_dropdown_control.find('option:selected').data('image');
-        correctAccessCode = chooseYourSelf_dropdown_control.find('option:selected').data('access-code');
-        updateImage(imagePath + personImageName + '.jpg', image_left);
-        updateAccessCodeControl(accessCode_input_control, personImageName);
-        enableOrDisableAccessCodeInput(personId, accessCode_input_control);
-    });
-}
-
 function updateImage(imageSource, image_destination) {
     image_destination.attr('src', imageSource);
 }
 
+function verifyCodeListener(accessCode_input_control) {
+	accessCode_input_control.keyup(function () {
+		var accessCode = $(this).val();
 
-function updateAccessCodeControl(accessCode_input_control, personImageName) {
-    accessCode_input_control.val('');
-    if (personImageName != 'empty') {
-        accessCode_input_control.attr('placeholder', 'Code');
-    } else {
-        accessCode_input_control.attr('placeholder', '');
-    }
-}
-
-function enableOrDisableAccessCodeInput(personId, accessCode_input_control) {
-    if (parseInt(personId) > 0) {
-        accessCode_input_control.removeAttr('disabled');
-    }
-    else {
-        accessCode_input_control.attr('disabled', 'disabled');
-    }
-}
-
-function accessCodeInputListener(accessCode_input_control, startButton_control, imageWrapper, controlsWrapper, errorWrapper) {
-    accessCode_input_control.keyup(function () {
-        var accessCode = $(this).val();
-        if (accessCode.length === 4) {
-            if (parseInt(accessCode) === correctAccessCode) {
-                // check if this person already has chosen a person
-                if (personHasAlreadyChosen) {
-                    controlsWrapper.hide();
-                    imageWrapper.hide();
-                    errorWrapper.show();
-                } else {
-                    startButton_control.removeAttr('disabled');
-                    startButton_control.html('Start !');
-                }
-            } else {
-                startButton_control.attr('disabled', 'disabled');
-                startButton_control.html('');
-            }
-        }
-    });
+		if (accessCode.length === 4) {
+			$.ajax({
+				type: "POST",
+				url: site_url + "/game/ajaxVerifyAccessCode",
+				data: {accessCode: accessCode},
+				dataType: "json",
+				success: function (result) {
+					if (result['userId'] > 0) {
+						window.location.href = site_url + "game/home";
+					}
+					// else -> do nothing
+				},
+				error: function (xhr, status, error) {
+					console.log("-- ERROR IN AJAX --\n\n" + xhr.responseText);
+				}
+			});
+		}
+	});
 }
 
 //get unchosen persons that is't the player-person
-function showPossiblePersons(currentPersonId, gameId, image_right, messageWrapper, resultWrapper) {
-    $.ajax({
+function showPossiblePersons(currentPersonId, gameId, image_right, resultWrapper) {
+	$.ajax({
         type: "POST",
         url: site_url + "/game/ajaxGetRandomPerson",
         data: {currentPersonId: currentPersonId, gameId: gameId},
@@ -124,8 +90,6 @@ function showPossiblePersons(currentPersonId, gameId, image_right, messageWrappe
                 }
                 resultWrapper.find('p.result').html(resultMessage);
                 resultWrapper.find('p.result-ps').html(resultPs);
-                messageWrapper.hide();
-                resultWrapper.show();
             }, 4000);
         },
         error: function (xhr, status, error) {
@@ -135,27 +99,24 @@ function showPossiblePersons(currentPersonId, gameId, image_right, messageWrappe
 }
 
 
-function startButtonListener(startButton_control, controlsWrapper, messageWrapper, resultWrapper, image_right) {
+function startButtonListener(startButton_control, controlsWrapper, resultWrapper, image_right) {
     startButton_control.click(function () {
-        controlsWrapper.hide();
-        messageWrapper.show();
-        showPossiblePersons(personId, gameId, image_right, messageWrapper, resultWrapper);
+    	personId  = $('#person-id').val();
+		gameId  = $('#game-id').val();
+
+		// show message
+		resultWrapper.find('p.result').html('Randomizing ... now');
+        showPossiblePersons(personId, gameId, image_right, resultWrapper);
     });
 }
 
 $(document).ready(function () {
-    var chooseYourSelf_dropdown_control = $('#select-yourself-dropdown');
     var accessCode_input_control = $('input#accessCode');
-    var image_left = $('img.img-person-that-will-choose');
-    var image_right = $('img.img-choosen-person');
+    var image_right = $('img.img-chosen-person');
     var startButton_control = $('button#start-game');
-    var imageWrapper = $('div.image-wrapper');
     var controlsWrapper = $('div.controls-wrapper');
-    var messageWrapper = $('div.message-wrapper');
     var resultWrapper = $('div.result-wrapper');
-    var errorWrapper = $('div.error-wrapper');
 
-    chooseYourselfDropdownListener(chooseYourSelf_dropdown_control, accessCode_input_control, image_left);
-    accessCodeInputListener(accessCode_input_control, startButton_control, imageWrapper, controlsWrapper, errorWrapper);
-    startButtonListener(startButton_control, controlsWrapper, messageWrapper, resultWrapper, image_right);
+    verifyCodeListener(accessCode_input_control);
+    startButtonListener(startButton_control, controlsWrapper, resultWrapper, image_right);
 });

@@ -1,61 +1,51 @@
-<main role="main" class="container main main-game">
-    <div class="home-link">
-        <a href="<?php echo site_url('/game/index') ?>"><i class="fas fa-home"></i> Home</a>
-    </div>
-    <div class="gift-list-link">
-        <a href="<?php echo site_url('/game/giftLists') ?>"><i class="fas fa-gift"></i> Gift lists</a>
-    </div>
-    <div class="row image-wrapper">
-        <div class="col-5 img-left">
-            <?= image('empty.jpg',
-                'alt="image of the person that will choose" class="img-lg img-person-that-will-choose"') ?>
-        </div>
-        <div class="col-2 arrow-middle">
-            <div class="arrow-to-right"></div>
-        </div>
-        <div class="col-5 img-right">
-            <?= image('empty.jpg', 'alt="image of the person that will choose" class="img-lg img-choosen-person"') ?>
-        </div>
-    </div>
+<?php /**@var Person_entity $currentPerson */ ?>
+<?php /**@var Person_entity $chosenPerson */ ?>
+<?php /**@var Game_entity $game */ ?>
+<main role="main" class="container main main--game d-flex flex-column justify-content-center">
+	<?php
+	if ($chosenPerson) {
+		if ($chosenPerson->getNickname() === $chosenPerson->getName()) {
+			$resultMessage = 'You picked ' . ucfirst($chosenPerson->getName()) . ' ' . ucfirst($chosenPerson->getLastname()) . "!";
+		} else {
+			$resultMessage = 'You picked "' . ucfirst($chosenPerson->getNickname()) . '" aka ' . ucFirst($chosenPerson->getName()) . ' ' . ucFirst($chosenPerson->getLastname()) . "!";
+		}
+		?>
+		<div class="row d-block result-wrapper">
+			<p class="result"><?php echo $resultMessage ?></p>
+			<p class="result-ps">You can surprise him with a gift of <span style="white-space:nowrap">€20.</span></p>
+		</div>
+	<?php } else { ?>
+	<div class="row d-block result-wrapper p-2">
+		<p class="result"></p>
+		<p class="result-ps"></p>
+	</div>
 
-    <div class="row controls-wrapper">
-        <div class="col-4 ">
-            <?php
-            /**
-             * Data for dropdown for choosing the player (person who plays)
-             *
-             * @var array $persons
-             * @var Person_entity $person
-             */
-            if (sizeof($persons) > 0): ?>
-                <select id="select-yourself-dropdown" name="select-yourself-dropdown" class="form-control"
-                        required="required">
-                    <option value="" data-image="blank">I am ...</option>
-                    <?php foreach ($persons as $person): ?>
-                        <option value="<?= $person->getId() ?>"
-                                data-image="<?= $person->getImage() ?>"
-                                data-token="<?= $person->getHasChosenPersonId() ?>"
-                                data-game-id="<?= $gameId ?>"
-                                data-access-code="<?= $person->getAccessCode() ?>"> <?= ucfirst($person->getNickname()) ?></option>
-                    <?php endforeach; ?>
-                </select>
-            <?php endif; ?>
-        </div>
-        <div class="col-4 ">
-            <input type="number" id="accessCode" class="form-control" required="required" disabled="disabled">
-        </div>
-        <div class="col-4 ">
-            <button id="start-game" type="button" class="btn btn-outline-light" disabled="disabled">&nbsp;</button>
-        </div>
-    </div>
-    <div class="row message-wrapper">
-        <p class="message"> Randomizing ...</p>
-    </div>
-    <div class="row result-wrapper">
-        <p class="result"></p>
-        <p class="result-ps"></p>
-    </div>
-    <div class="row error-wrapper">
-        <p class="message">You have already chosen.</p>
-    </div>
+	<div class="row h-100 d-flex flex-column align-items-center justify-content-center">
+
+		<div class="row w-100 d-flex flex-column flex-md-row flex-nowrap align-items-center justify-content-center main--game__image-wrapper ">
+			<div class="main--game__image main--game__image--left">
+				<?php echo image($currentPerson->getName() . '_' . $currentPerson->getLastname() . '.jpg',
+					'alt="image of the person that will choose" class="img-lg img-person-that-will-choose"'
+				) ?>
+			</div>
+			<div class="main--game__image-spacer position-relative">
+				<div class="arrow-to-right position-absolute"></div>
+			</div>
+			<div class="main--game__image main--game__image--right">
+				<?php echo image(
+					'empty.jpg',
+					'alt="image of the person that will choose" class="img-lg img-chosen-person"'
+				) ?>
+			</div>
+		</div>
+
+		<div class="row controls-wrapper w-100 mt-3 text-center">
+			<input hidden id="person-id" name="person-id" value="<?php echo $currentPerson->getId() ?>"/>
+			<input hidden id="game-id" name="game-id" value="<?php echo $game->getId() ?>"/>
+			<button id="start-game" type="button" class="btn btn-success c-btn c-btn--sm c-btn--red c-btn--pill">PLAY
+			</button>
+		</div>
+	</div>
+	<?php }?>
+
 </main>

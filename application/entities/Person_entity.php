@@ -42,20 +42,25 @@ class Person_entity
      * @var string
      */
     private $image;
+	/**
+	 * @var bool
+	 */
+	private $isActive;
 
-    /**
-     * Person_entity constructor.
-     * @param int $id
-     * @param string $name
-     * @param string $lastname
-     * @param string $nickname
-     * @param string $image
-     * @param bool $isMale
-     * @param int $accessCode
-     * @param string $wishlist
-     * @param bool $isChosen
-     * @param int $hasChosenPersonId
-     */
+	/**
+	 * Person_entity constructor.
+	 * @param int $id
+	 * @param string $name
+	 * @param string $lastname
+	 * @param string $nickname
+	 * @param string $image
+	 * @param bool $isMale
+	 * @param int $accessCode
+	 * @param string $wishlist
+	 * @param bool $isChosen
+	 * @param int $hasChosenPersonId
+	 * @param bool $isActive
+	 */
 
     function __construct(
         int $id,
@@ -67,8 +72,8 @@ class Person_entity
         int $accessCode,
         string $wishlist,
         bool $isChosen,
-        int $hasChosenPersonId
-
+        int $hasChosenPersonId,
+        bool $isActive
     ) {
         $this->id = $id;
         $this->name = $name;
@@ -80,7 +85,8 @@ class Person_entity
         $this->isChosen = $isChosen;
         $this->hasChosenPersonId = $hasChosenPersonId;
         $this->image = $image;
-    }
+		$this->isActive = $isActive;
+	}
 
     /**
      * @return int
@@ -241,4 +247,20 @@ class Person_entity
     {
         $this->hasChosenPersonId = $hasChosenPersonId;
     }
+
+	/**
+	 * @return bool
+	 */
+	public function isActive(): bool
+	{
+		return $this->isActive;
+	}
+
+	/**
+	 * @param bool $isActive
+	 */
+	public function setIsActive(bool $isActive): void
+	{
+		$this->isActive = $isActive;
+	}
 }
