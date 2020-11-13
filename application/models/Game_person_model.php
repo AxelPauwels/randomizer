@@ -9,6 +9,15 @@ class Game_person_model extends CI_Model
         parent::__construct();
     }
 
+    public function getSpecificGame(int $gameId, int $personId){
+		$this->db->where('id >', 0);
+		$this->db->where('gameId', $gameId);
+		$this->db->where('personId', $personId);
+		$query = $this->db->get('game_person');
+
+		return $query->row();
+	}
+
     public function getGamePersonsByGameId(int $gameId)
     {
         $this->db->where('id >', 0);

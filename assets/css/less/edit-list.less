@@ -1,0 +1,23 @@
+@form-offset-top: 50px;
+.main--edit-giftlist {
+  .form {
+	&--container {
+	  height: calc(100% - (@welcome-message-offset-top + @welcome-message-height + @form-offset-top)); // 100 of
+	  margin-top: @form-offset-top;
+	}
+  }
+
+  textarea {
+	background: transparent;
+	resize: none;
+	margin: 5px;
+	border: 1px solid @color-secondary-normal;
+	border-radius: 3px;
+
+	&:focus,
+	&:active {
+	  outline: none !important;
+	  box-shadow: none !important;
+	}
+  }
+}

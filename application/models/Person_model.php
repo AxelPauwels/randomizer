@@ -18,6 +18,7 @@ class Person_model extends CI_Model
         $this->db->where('id', $personId);
         $query = $this->db->get('person');
         $personItem = $query->row();
+
         return $this->getPersonObject($personItem);
     }
 
@@ -29,6 +30,7 @@ class Person_model extends CI_Model
     {
         $this->db->where('id', $personId);
         $query = $this->db->get('person');
+
         return $query->row();
     }
 
@@ -38,6 +40,7 @@ class Person_model extends CI_Model
     public function getAll()
     {
         $this->db->where('id >', 0);
+        $this->db->where('isActive', 1);
         $this->db->order_by('name');
         $query = $this->db->get('person');
         $result = $query->result();
@@ -46,11 +49,12 @@ class Person_model extends CI_Model
         foreach ($result as $result_item) {
             $persons[] = $this->getPersonObject($result_item);
         }
+
         return $persons;
     }
 
     /**
-     * Creates and returns a 'GameEntity' object
+     * Creates and returns a 'PersonEntity' object
      *
      * @param $item
      * @return Person_entity
@@ -67,8 +71,10 @@ class Person_model extends CI_Model
             $item->accessCode,
             $item->wishlist,
             0,
-            -1
+            -1,
+            $item->isActive
         );
+
         return $person;
     }
 
@@ -83,6 +89,31 @@ class Person_model extends CI_Model
         $this->db->select('wishlist');
         $this->db->where('id', $personId);
         $query = $this->db->get('person');
+
         return $query->row()->wishlist;
     }
+
+	/**
+	 * @param int $accessCode
+	 * @return int
+	 */
+	public function getIdByAccessCode(int $accessCode): int
+	{
+		$this->db->select('id');
+		$this->db->where('accessCode', $accessCode);
+		$query = $this->db->get('person');
+		$id = $query->result();
+
+		return ($id) ? (int)$id : -1;
+	}
+
+	/**
+	 * @param Person_entity $person
+	 */
+	public function updatePerson(Person_entity $person)
+	{
+		$this->db->where('id', $person->getId());
+		$this->db->set('wishlist',$person->getWishlist());
+		$this->db->update('person');
+	}
 }

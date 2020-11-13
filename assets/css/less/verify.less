@@ -1,0 +1,54 @@
+.main--verify {
+  input.accessCode {
+	background: transparent;
+	color: @color-secondary-normal;
+	font-size: 3em;
+	border: none;
+	border-bottom: 1px solid @color-secondary-normal;
+	margin: -100px 10px 0 10px;
+	border-radius: 0;
+	max-width: 300px;
+
+	&:focus,
+	&:active {
+	  outline: none !important;
+	  box-shadow: none !important;
+	  border: none;
+	}
+  }
+
+  //
+  // placeholder color
+  //*******************
+
+  ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+	color: @color-secondary-normal;
+	opacity: 1; /* Firefox */
+  }
+
+  :-ms-input-placeholder { /* Internet Explorer 10-11 */
+	color: @color-secondary-normal;
+  }
+
+  ::-ms-input-placeholder { /* Microsoft Edge */
+	color: @color-secondary-normal;
+  }
+
+  //
+  // placeholder hide number-spinner
+  //*********************************
+
+  /* Chrome, Safari, Edge, Opera */
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+  }
+
+  /* Firefox */
+
+  input[type=number] {
+	-moz-appearance: textfield;
+  }
+}

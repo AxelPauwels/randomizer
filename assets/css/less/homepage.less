@@ -1,29 +1,47 @@
-.main-home {
-  padding-top: ~"calc(50vh - (@{form-control-height-md} / 2))"; // 50% minus (the height of form controls divided by 2)
+.main--home {
 
-  form#gameform {
-    width: 100%;
+  .tile {
+	@media screen and (min-width: @screen-sm-minwidth) {
+	  padding: 0 3rem !important;
+	}
+	@media screen and (min-width: @screen-md-minwidth) {
+	  padding: 0 4rem !important;
+	}
+	@media screen and (min-width: @screen-lg-minwidth) {
+	  padding: 0 5rem !important;
+	}
 
-    select,
-    input {
-      font-size: @font-size-md;
-      height: @form-control-height-md !important; // force for the select height
-    }
+	&:hover {
+	  i {
+		color: lighten(@color-secondary-normal, 10%);
+	  }
 
-    select {
-      margin-right: 15px;
-      margin-left: auto;
-      width: 70%;
-    }
+	  .tile__text {
+		color: lighten(@color-secondary-normal, 10%);
+	  }
+	}
 
-    input {
-      margin: auto;
-      margin-left: 0;
+	&__link {
+	  height: 150px;
 
-      text-shadow: @text-shadow;
-      &:hover{
-        text-shadow: none;
-      }
-    }
+	  &:hover {
+		text-decoration: none;
+	  }
+
+	  i {
+		color: @color-secondary-normal;
+		text-shadow: 1px 1px black;
+	  }
+
+	  .fa-dice {
+		font-size: 7.5em;
+	  }
+	}
+
+	&__text {
+	  color: @color-secondary-normal;
+	  font-size: 2em;
+	  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+	}
   }
 }

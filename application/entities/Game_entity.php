@@ -15,15 +15,15 @@ class Game_entity
      */
     private $year;
 
-    public function __construct(
-        int $id,
-        string $name,
-        string $year
-    ) {
-        $this->id = $id;
-        $this->name = $name;
-        $this->year = $year;
-    }
+	public function __construct(
+		int $id,
+		string $name,
+		string $year
+	) {
+		$this->id = $id;
+		$this->name = $name;
+		$this->year = $year;
+	}
 
     /**
      * @return int

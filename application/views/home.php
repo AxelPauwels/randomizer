@@ -1,47 +1,22 @@
-<main role="main" class="container main main-home">
-    <div class="home-link">
-        <a href="<?php echo site_url('/game/index') ?>"><i class="fas fa-home"></i> Home</a>
-    </div>
-    <div class="gift-list-link">
-        <a href="<?php echo site_url('/game/giftLists') ?>"><i class="fas fa-gift"></i> Gift lists</a>
-    </div>
-    <div class="row">
-        <?php
-        /**
-         * Data to open and submit the form
-         */
-        $dataOpen = array(
-            'id' => 'gameform',
-            'name' => 'gameform',
-            'data-toggle' => 'validator',
-            'role' => 'form',
-            'class' => 'form-inline',
+<?php /** @var Person_entity $user */ ?>
+<main role="main" class="container main main--home d-flex flex-column justify-content-center">
+	<div class="row d-flex flex-column align-items-center justify-content-center main--home__welcome-message welcome-message">
+		<p><?php echo 'Welcome back ' . $user->getNickname() . '!' ?></p>
+		<p><?php echo 'Make your choice...' ?></p>
+	</div>
 
-        );
-
-        $dataSubmit = array(
-            'type' => 'submit',
-            'name' => 'gamesubmit',
-            'value' => 'GO !',
-            'class' => 'btn btn-outline-light'
-        );
-
-        /**
-         * Data for dropdown
-         *
-         * @var array $games
-         * @var Game_entity $game
-         */
-        $gameDropdownOptions = array('' => '--- Select a randomizer ---');
-
-        foreach ($games as $game) {
-            $gameDropdownOptions[$game->getId()] = $game->getName() . ' ' . $game->getYear();
-        }
-
-        echo form_open('game/play', $dataOpen);
-        echo form_dropdown('gameId', $gameDropdownOptions, null, 'class="form-control" required="required"');
-        echo form_submit($dataSubmit) . "\n";
-        echo form_close();
-        ?>
-    </div>
+	<div class="tile--container row justify-content-center">
+		<div class="tile tile--play-game d-block text-center pr-3">
+			<a class="tile__link d-flex flex-column" href="<?php echo site_url('/game/selectGame') ?>">
+				<i class="fas fa-8x fa-dice"></i>
+			</a>
+			<span class="tile__text tile__text--bottom">Play Game</span>
+		</div>
+		<div class="tile tile--giftlist d-block text-center pl-3">
+			<a class="tile__link d-flex flex-column" href="<?php echo site_url('/game/editList') ?>">
+				<i class="fas fa-8x fa-gift"></i>
+			</a>
+			<span class="tile__text tile__text--bottom">Edit list</span>
+		</div>
+	</div>
 </main>
