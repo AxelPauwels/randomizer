@@ -1,7 +1,7 @@
 <main role="main" class="container main main--edit-giftlist d-flex flex-column justify-content-center">
 	<div class="row d-flex flex-column align-items-center justify-content-center main--edit-giftlist__welcome-message welcome-message">
-		<p><?php echo 'Edit your own whishlist' ?></p>
-		<p><?php echo 'Enter a item on each next line' ?></p>
+		<p><?php echo 'Edit your own wishlist' ?></p>
+		<p><?php echo 'Write 1 item per line' ?></p>
 	</div>
 
 	<div class="form--container row justify-content-center">
@@ -12,5 +12,4 @@
 			</button>
 		</form>
 	</div>
-
 </main>

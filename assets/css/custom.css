@@ -276,13 +276,6 @@ body {
   outline: none !important;
   box-shadow: none !important;
 }
-.main--giftlist__image {
-  position: absolute;
-  top: 75px;
-  left: 0;
-  right: 0;
-  margin: 0;
-}
 .main--giftlist__image-wrapper img {
   border: 1px solid #aa0a27;
   border-radius: 50%;
@@ -290,9 +283,6 @@ body {
   width: 150px;
   margin: 0 auto;
   display: block;
-}
-.main--giftlist__list {
-  padding-top: 150px;
 }
 .main--giftlist__list ul {
   list-style-type: none;

@@ -298,9 +298,9 @@ class Game extends CI_Controller
 
 		$currentPerson = $this->getUserByCookie();
 		$data['showEditBtn'] = false;
-		if($this->getUserByCookie() === $data['person']->){
-			$data['showEditBtn'] = true;
-		}
+//		if($this->getUserByCookie() === $data['person']->){
+//			$data['showEditBtn'] = true;
+//		}
 
 		$wishlist = $this->person_model->getWishlist($personId);
 		if ($wishlist) {

@@ -5,14 +5,21 @@
 	<?php
 	if ($chosenPerson) {
 		if ($chosenPerson->getNickname() === $chosenPerson->getName()) {
-			$resultMessage = 'You picked ' . ucfirst($chosenPerson->getName()) . ' ' . ucfirst($chosenPerson->getLastname()) . "!";
+			$resultMessage = 'You picked ' . ucfirst($chosenPerson->getName()) . ' ' . ucfirst($chosenPerson->getLastname()) . '!';
 		} else {
-			$resultMessage = 'You picked "' . ucfirst($chosenPerson->getNickname()) . '" aka ' . ucFirst($chosenPerson->getName()) . ' ' . ucFirst($chosenPerson->getLastname()) . "!";
+			$resultMessage = 'You picked ' . ucfirst($chosenPerson->getName()) . ' ' . ucfirst($chosenPerson->getLastname()) .
+			' aka "' . ucFirst($chosenPerson->getNickname()) . '" !';
 		}
 		?>
 		<div class="row d-block result-wrapper p-2">
 			<p class="result"><?php echo $resultMessage ?></p>
-			<p class="result-ps">You can surprise him with a gift of <span style="white-space:nowrap">€20.</span></p>
+			<?php
+			$sex = 'him';
+			if (!$chosenPerson->getIsMale()) {
+				$sex = 'her';
+			}
+			?>
+			<p class="result-ps">You can surprise <?php echo $sex ?> with a gift of <span style="white-space:nowrap">€20.</span></p>
 		</div>
 	<?php } else { ?>
 	<div class="row d-block result-wrapper p-2">
