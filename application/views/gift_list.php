@@ -1,6 +1,6 @@
 <?php /** @var Person_entity $person */ ?>
-<main role="main" class="container main main--giftlist d-flex flex-column justify-content-center">
-	<div class="row flex-column justify-content-center align-items-center text-center w-100 main--giftlist__image">
+<main role="main" class="container main main--giftlist d-flex flex-column">
+	<div class="flex-column justify-content-center align-items-center text-center w-100 main--giftlist__image">
 		<?php if ($person) { ?>
 			<div class="main--giftlist__image-wrapper">
 				<?php echo image(
