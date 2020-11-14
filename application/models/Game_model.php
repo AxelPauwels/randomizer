@@ -58,7 +58,8 @@ class Game_model extends CI_Model
         $game = new Game_entity(
             $item->id,
             $item->name,
-            $item->year
+            $item->year,
+            $item->budget
         );
 
         return $game;

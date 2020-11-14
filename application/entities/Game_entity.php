@@ -14,15 +14,21 @@ class Game_entity
      * @var string
      */
     private $year;
+	/**
+	 * @var int
+	 */
+	private $budget;
 
 	public function __construct(
 		int $id,
 		string $name,
-		string $year
+		string $year,
+		int $budget
 	) {
 		$this->id = $id;
 		$this->name = $name;
 		$this->year = $year;
+		$this->budget = $budget;
 	}
 
     /**
@@ -72,4 +78,21 @@ class Game_entity
     {
         $this->year = $year;
     }
+
+	/**
+	 * @return int
+	 */
+	public function getBudget(): int
+	{
+		return $this->budget;
+	}
+
+	/**
+	 * @param int $budget
+	 */
+	public function setBudget(int $budget): void
+	{
+		$this->budget = $budget;
+	}
+
 }

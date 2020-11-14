@@ -19,7 +19,7 @@
 				$sex = 'her';
 			}
 			?>
-			<p class="result-ps">You can surprise <?php echo $sex ?> with a gift of <span style="white-space:nowrap">€20.</span></p>
+			<p class="result-ps">You can surprise <?php echo $sex ?> with a gift of <span style="white-space:nowrap">€<?php echo $game->getBudget() ?></span></p>
 		</div>
 	<?php } else { ?>
 	<div class="row d-block result-wrapper p-2">
@@ -49,6 +49,7 @@
 		<div class="row controls-wrapper w-100 mt-3 text-center">
 			<input hidden id="person-id" name="person-id" value="<?php echo $currentPerson->getId() ?>"/>
 			<input hidden id="game-id" name="game-id" value="<?php echo $game->getId() ?>"/>
+			<input hidden id="game-budget" name="game-budget" value="<?php echo $game->getBudget() ?>"/>
 			<button id="start-game" type="button" class="btn btn-success c-btn c-btn--sm c-btn--red c-btn--pill">PLAY
 			</button>
 		</div>

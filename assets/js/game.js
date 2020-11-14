@@ -3,6 +3,7 @@ var imagePath = base_url + 'assets/images/';
 var personId = '';
 var personHasAlreadyChosen = false;
 var gameId = '';
+var gameBudget = '0';
 var correctAccessCode = '';
 var chosenPerson;
 
@@ -40,7 +41,7 @@ function verifyCodeListener(accessCode_input_control) {
 }
 
 //get unchosen persons that is't the player-person
-function showPossiblePersons(currentPersonId, gameId, image_right, resultWrapper) {
+function showPossiblePersons(currentPersonId, gameId, gameBudget, image_right, resultWrapper) {
 	$.ajax({
         type: "POST",
         url: site_url + "/game/ajaxGetRandomPerson",
@@ -79,14 +80,14 @@ function showPossiblePersons(currentPersonId, gameId, image_right, resultWrapper
                     resultMessage = 'You picked ' + ucFirst(chosenPerson.name) + ' ' + ucFirst(chosenPerson.lastname) + "!";
 
                 } else {
-                    resultMessage = 'You picked "' + ucFirst(chosenPerson.nickname) + '" aka ' + ucFirst(chosenPerson.name) + ' ' + ucFirst(chosenPerson.lastname) + "!";
+                    resultMessage = 'You picked ' + ucFirst(chosenPerson.name) + ' ' + ucFirst(chosenPerson.lastname) + ' aka "' + ucFirst(chosenPerson.nickname) + '"!';
                 }
 
                 var resultPs = "";
                 if (chosenPerson.isMale) {
-                    resultPs = "You can surprise him with a gift of € 20.";
+                    resultPs = "You can surprise him with a gift of €" + gameBudget;
                 } else {
-                    resultPs = "You can surprise her with a gift of € 20.";
+                    resultPs = "You can surprise her with a gift of €" + gameBudget;
                 }
                 resultWrapper.find('p.result').html(resultMessage);
                 resultWrapper.find('p.result-ps').html(resultPs);
@@ -105,10 +106,11 @@ function startButtonListener(startButton_control, controlsWrapper, resultWrapper
     startButton_control.click(function () {
     	personId  = $('#person-id').val();
 		gameId  = $('#game-id').val();
+		gameBudget  = $('#game-id').val();
 
 		// show message
 		resultWrapper.find('p.result').html('Randomizing ... now');
-        showPossiblePersons(personId, gameId, image_right, resultWrapper);
+        showPossiblePersons(personId, gameId, gameBudget, image_right, resultWrapper);
     });
 }
 
