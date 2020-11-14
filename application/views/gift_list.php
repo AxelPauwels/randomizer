@@ -1,5 +1,5 @@
 <?php /** @var Person_entity $person */ ?>
-<main role="main" class="container main main--giftlist d-flex justify-content-center">
+<main role="main" class="container main main--giftlist d-flex flex-column justify-content-center">
 	<div class="row flex-column justify-content-center align-items-center text-center w-100 main--giftlist__image">
 		<?php if ($person) { ?>
 			<div class="main--giftlist__image-wrapper">
@@ -23,4 +23,14 @@
 				</ul>
 			</div>
 		<?php } ?>
+	</div>
+	<?php if ($showEditBtn) { ?>
+		<div class="row text-center d-flex flex-row justify-content-center">
+			<form method="POST" action="<?php echo site_url('/game/editList') ?>">
+				<button type="submit" class="btn btn-success c-btn c-btn--red c--btn--pill">
+					Edit your own list
+				</button>
+			</form>
+		</div>
+	<?php } ?>
 </main>

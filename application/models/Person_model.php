@@ -102,7 +102,7 @@ class Person_model extends CI_Model
 		$this->db->select('id');
 		$this->db->where('accessCode', $accessCode);
 		$query = $this->db->get('person');
-		$id = $query->result();
+		$id = $query->row()->id;
 
 		return ($id) ? (int)$id : -1;
 	}

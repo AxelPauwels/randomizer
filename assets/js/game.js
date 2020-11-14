@@ -91,6 +91,8 @@ function showPossiblePersons(currentPersonId, gameId, image_right, resultWrapper
                 resultWrapper.find('p.result').html(resultMessage);
                 resultWrapper.find('p.result-ps').html(resultPs);
             }, 4000);
+
+            $('#start-game').hide();
         },
         error: function (xhr, status, error) {
             console.log("-- ERROR IN AJAX --\n\n" + xhr.responseText);

@@ -29,8 +29,8 @@
     <!--CSS (custom css as last)-->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
           integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
-    <?php echo stylesheet("bootstrap.css"); ?>
-    <?php echo stylesheet("custom.css"); ?>
+    <?php echo stylesheet("bootstrap.css?v=2020-10-13"); ?>
+    <?php echo stylesheet("custom.css?v=2020-10-13"); ?>
 </head>
 
 <body>

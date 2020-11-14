@@ -10,7 +10,7 @@
 			$resultMessage = 'You picked "' . ucfirst($chosenPerson->getNickname()) . '" aka ' . ucFirst($chosenPerson->getName()) . ' ' . ucFirst($chosenPerson->getLastname()) . "!";
 		}
 		?>
-		<div class="row d-block result-wrapper">
+		<div class="row d-block result-wrapper p-2">
 			<p class="result"><?php echo $resultMessage ?></p>
 			<p class="result-ps">You can surprise him with a gift of <span style="white-space:nowrap">€20.</span></p>
 		</div>

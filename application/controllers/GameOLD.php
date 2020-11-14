@@ -9,11 +9,11 @@ class Game extends CI_Controller
 	const COOKIE_NAME = '63PAzVDVdstkFCA8';
 	const COOKIE_VALUE_PREFIX = 'R34aLVwLJayxF94m'; // a random string to prepend to the id
 	const COOKIE_EXPIRE_DATE = '2147483647'; // The maximum value compatible with 32 bits systems is:( = 2^31 = ~year 2038)
-
-	/**
-	 * @var Person_entity
-	 */
-	private $loggedInUser;
+//
+//	/**
+//	 * @var Person_entity
+//	 */
+//	private $loggedInUser;
 
 	private $gameId;
 
@@ -24,11 +24,8 @@ class Game extends CI_Controller
 		$this->load->model('person_model');
 		$this->load->model('game_person_model');
 		$this->load->helper('cookie');
-
-		if (!$this->loggedInUser) {
-			$this->isLoggedIn();
-		}
 	}
+
 
 	/**
 	 * @param int $id
@@ -53,26 +50,17 @@ class Game extends CI_Controller
 		return get_cookie(Game::COOKIE_NAME);
 	}
 
-	/**
-	 * @return bool
-	 */
-	public function isLoggedIn(): bool
+	public function getUserByCookie()
 	{
-		if (!$this->loggedInUser) {
-			// check if there is a cookie (the value is the id)
-			if ($cookieValue = $this->getUserCookie()) {
-				$userId = (int)str_replace(Game::COOKIE_VALUE_PREFIX, '', $cookieValue);
-				$this->loggedInUser = $this->person_model->getPersonById($userId);
-			}
-		}
-
-		return ($this->loggedInUser) ? true : false;
+		$cookieValue = $this->getUserCookie();
+		$userId = (int)str_replace(Game::COOKIE_VALUE_PREFIX, '', $cookieValue);
+		return $this->person_model->getPersonById($userId);
 	}
 
 	public function verify()
 	{
 		// redirect when there is a cookie set. (it's set during ajax when checking the accessCode)
-		if ($this->isLoggedIn()) {
+		if ($this->getUserCookie()) {
 			redirect('game/home');
 			// user is ingelogd
 		}
@@ -83,11 +71,11 @@ class Game extends CI_Controller
 
 	public function home()
 	{
-		if (!$this->isLoggedIn()) {
+		if (!$this->getUserCookie()) {
 			redirect('game/verify');
 		}
 
-		$data['user'] = $this->loggedInUser;
+		$data['user'] = $this->getUserByCookie();
 
 		$partials = array('myContent' => 'home');
 		$this->template->load('main_master', $partials, $data);
@@ -100,37 +88,52 @@ class Game extends CI_Controller
 
 		if (count($data['games']) === 1) {
 			$this->gameId = (int)$data['games'][0]->getId();
-			redirect('game/play/' . $data['games'][0]->getId());
+
+			var_dump('test');
+			var_dump($data['games'][0]->getId());
+
+			redirect('game/play/'.$data['games'][0]->getId());
 		}
 
 		$partials = array('myContent' => 'select_game');
 		$this->template->load('main_master', $partials, $data);
 	}
 
-	public function play($id = 0)
+	public function play()
 	{
 		$gameId = (int)$this->input->post('gameId');
 
-		// if redirected from selectGame(), the parameter $id will be set
-		if ($id != 0) {
-			$gameId = (int)$id;
+		// if redirected from selectGame(), the parameter $gameId will be set
+		// example explode('/',$_SERVER['REQUEST_URI']:
+		//		array (size=4)
+		//  0 => string '' (length=0)
+		//  1 => string 'game' (length=4)
+		//  2 => string 'play' (length=4)
+		//  3 => string '1' (length=1)
+
+		// otherwise it should come out of the form from select_game.php
+		$uriParts = explode('/', $_SERVER['REQUEST_URI']);
+
+		if (count($uriParts) === 4) {
+			$gameId = (int)$uriParts[3];
 		}
 
 		$data['game'] = $this->game_model->get($gameId);
-		$data['currentPerson'] = $this->loggedInUser;
+		$data['currentPerson'] = $this->getUserByCookie();
 		$data['chosenPerson'] = null;
 
-		$hasAlreadyChosen = $this->game_person_model->getSpecificGame($gameId, $this->loggedInUser->getId());
+		$hasAlreadyChosen = $this->game_person_model->getSpecificGame($gameId, $this->getUserByCookie()->getId());
 		if ((int)$hasAlreadyChosen->hasChosenPersonId !== -1) {
 			$data['chosenPerson'] = $this->person_model->getPersonById($hasAlreadyChosen->hasChosenPersonId);
 		}
 
-		$this->game_person_model->getSpecificGame($gameId, $this->loggedInUser->getId());
+		$this->game_person_model->getSpecificGame($gameId,$this->getUserByCookie()->getId());
 		$data['persons'] = $this->getPersonsByGameId($gameId);
 
 		$partials = array('myContent' => 'game');
 		$this->template->load('main_master', $partials, $data);
 	}
+
 
 	/**
 	 * Returns an array with 'Game' objects
@@ -144,7 +147,7 @@ class Game extends CI_Controller
 		$allGamesThisYear = $this->game_model->getAll();
 
 		foreach ($allGamesThisYear as $game) {
-			$possibleGame = $this->game_person_model->getSpecificGame($game->getId(), $this->loggedInUser->getId());
+			$possibleGame = $this->game_person_model->getSpecificGame($game->getId(), $this->getUserByCookie()->getId());
 			if ($possibleGame) {
 				$gamesFromPerson[] = $game;
 			}
@@ -186,7 +189,6 @@ class Game extends CI_Controller
 	 */
 	public function ajaxVerifyAccessCode()
 	{
-
 		$userId = -1;
 		$accessCode = $this->input->post('accessCode');
 
@@ -196,7 +198,6 @@ class Game extends CI_Controller
 
 		if ($userId !== -1) {
 			$this->setUserCookie($userId);
-			$this->loggedInUser = $this->person_model->getPersonById($userId);
 		}
 
 		echo json_encode(["userId" => $userId]);
@@ -210,7 +211,7 @@ class Game extends CI_Controller
 	 */
 	public function ajaxGetRandomPerson()
 	{
-		$currentPersonId = $this->loggedInUser->getId();
+		$currentPersonId = $this->getUserByCookie()->getId();
 		$gameId = (int)$this->input->post('gameId');
 
 		// get all game persons by gameId
@@ -292,27 +293,27 @@ class Game extends CI_Controller
 
 	public function giftList($personId)
 	{
+		$data['wishlist'] = [];
 		$data['person'] = $this->person_model->getPersonById($personId);
 
-		$data['wishlist'] = [];
+		$currentPerson = $this->getUserByCookie();
+		$data['showEditBtn'] = false;
+		if($this->getUserByCookie() === $data['person']->){
+			$data['showEditBtn'] = true;
+		}
+
 		$wishlist = $this->person_model->getWishlist($personId);
 		if ($wishlist) {
 			$data['wishlist'] = explode(',', $wishlist);
 		}
-
-		$data['showEditBtn'] = false;
-		if($this->loggedInUser->getId() === $data['person']->getId()){
-			$data['showEditBtn'] = true;
-		}
-
 		$partials = array('myContent' => 'gift_list');
 		$this->template->load('main_master', $partials, $data);
 	}
 
 	public function editList()
 	{
-		$data['wishlist'] = "";
-		$wishlist = $this->person_model->getWishlist($this->loggedInUser->getId());
+		$wishlist = (string)$this->person_model->getWishlist($this->getUserByCookie()->getId());
+		$data['wishlist'] = $wishlist;
 
 		if (strpos($wishlist, ',') !== false) {
 			$data['wishlist'] = str_replace(",", "\r\n", $wishlist);
@@ -333,9 +334,10 @@ class Game extends CI_Controller
 			$wishlistCorrected = substr($wishlistCorrected, 0, -1);
 		}
 
-		$this->loggedInUser->setWishlist($wishlistCorrected);
-		$this->person_model->updatePerson($this->loggedInUser);
+		$currentUser = $this->getUserByCookie();
+		$currentUser->setWishlist($wishlistCorrected);
+		$this->person_model->updatePerson($currentUser);
 
-		redirect('game/giftList/'.$this->loggedInUser->getId());
+		redirect('game/editList');
 	}
 }
