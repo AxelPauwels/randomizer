@@ -13,7 +13,7 @@
 	<div class="row flex-column justify-content-center align-items-center text-center w-100 main--giftlist__list">
 		<?php if ($wishlist) { ?>
 			<div class="row">
-				<ul class="text-left p-0">
+				<ul class="text-left p-0 pt-5">
 					<?php foreach ($wishlist as $item) { ?>
 						<li class="main--giftlist__list-item">
 							<i class="fas fa-caret-right"></i>
