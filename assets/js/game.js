@@ -84,7 +84,7 @@ function showPossiblePersons(currentPersonId, gameId, gameBudget, image_right, r
                 }
 
                 var resultPs = "";
-                if (chosenPerson.isMale) {
+                if (parseInt(chosenPerson.isMale) === 1) {
                     resultPs = "You can surprise him with a gift of €" + gameBudget;
                 } else {
                     resultPs = "You can surprise her with a gift of €" + gameBudget;
@@ -106,7 +106,7 @@ function startButtonListener(startButton_control, controlsWrapper, resultWrapper
     startButton_control.click(function () {
     	personId  = $('#person-id').val();
 		gameId  = $('#game-id').val();
-		gameBudget  = $('#game-id').val();
+		gameBudget  = $('#game-budget').val();
 
 		// show message
 		resultWrapper.find('p.result').html('Randomizing ... now');
