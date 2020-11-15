@@ -56,7 +56,6 @@ body {
   background-attachment: fixed;
   background-position: center;
   background-size: cover;
-  overflow: hidden !important;
 }
 .nav {
   height: 70px;
@@ -91,7 +90,7 @@ body {
 }
 .main {
   font-family: philosopher-regular, sans-serif;
-  height: calc(100vh - 70px);
+  min-height: calc(100vh - 70px);
   padding-top: 70px;
 }
 .main .welcome-message {

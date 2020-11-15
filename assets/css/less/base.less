@@ -14,7 +14,7 @@ body {
   background-position: center;
   background-size: cover;
 
-  overflow: hidden !important;
+  //overflow: hidden !important;
 }
 
 .nav {
@@ -60,7 +60,7 @@ body {
 
 .main {
   font-family: @font-family-philosopher-regular, sans-serif;
-  height: ~"calc(100vh - @{nav-height})";
+  min-height: ~"calc(100vh - @{nav-height})";
   padding-top: @nav-height;
 
   .welcome-message {
